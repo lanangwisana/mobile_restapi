@@ -9,7 +9,7 @@
     <title>BSEConnect</title>
 </head>
 <body class = "bg-gray-100">
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 border-b-2 fixed z-50 top-0 w-full">
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 border-b-2 w-full">
         <div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
             <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{asset ("images/bsec-logo.jpg")}}" class="h-14, w-14" alt="BSEC Logo" />
@@ -26,7 +26,7 @@
                     <a href="/dashboard" class="block pb-2 px-3 text-blue-700 rounded underline underline-offset-[34px] md:bg-transparent  md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Dashboard</a>
                 </li>
                 <li>
-                    <a href="/presensi" class="block py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Presensi</a>
+                    <a href="/presensi" class="block py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Presence</a>
                 </li>
                 <li>
                     <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Substitut teacher</a>
@@ -38,7 +38,7 @@
             </div>
         </div>
     </nav>
-    <div class = "mt-24">  
+    <div class = "mt-2">  
         <div class="relative left-[240px] max-w-7xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <img src="{{asset ("images/bsec-logo.jpg")}}" class="h-24, w-24" alt="BSEC Logo" />
             <a href="#">

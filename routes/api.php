@@ -10,3 +10,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('presensis', PresensiApiController::class);
+
+// Route::get('presensis', [PresensiApiController::class, 'index']);
+// Route::get('presensis/{id}', [PresensiApiController::class, 'show']);
+// Route::post('presensis', [PresensiApiController::class, 'store']);
+// Route::put('presensis/{id}', [PresensiApiController::class, 'update']);
+// Route::delete('presensis/{id}', [PresensiApiController::class, 'destroy']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PresensiApiController extends Controller
 {
@@ -13,10 +14,12 @@ class PresensiApiController extends Controller
      */
     public function index()
     {
-        $presensi = Presensi::paginate(10);
+        $presensi = Presensi::orderBy('id', 'asc')->get();
         return response()->json([
+            'status' => true,
+            'massage' => 'Data berhasil dimuat',
             'data' => $presensi
-        ]);
+        ], 200);
 
     }
 
@@ -25,53 +28,118 @@ class PresensiApiController extends Controller
      */
     public function store(Request $request)
     {
-        $presensi = Presensi::create([
-            'name' => $request->name,
-            'subject' => $request->subject,
-            'date' => $request->date,
-            'topic' => $request->topic,
-            'grade' => $request->grade
-        ]);
+        $datapresensi = new Presensi;
+
+        $rules = [
+            'name'=>'required',
+            'subject'=>'required',
+            'date'=>'required|date',
+            'topic'=>'required',
+            'grade'=>'required'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json([
+                'status'=>false,
+                'massage'=>'Gagal memasukkan data',
+                'data'=> $validator->errors()
+            ]);
+        }
+
+        $datapresensi->name = $request->name;
+        $datapresensi->subject = $request->subject;
+        $datapresensi->date = $request->date;
+        $datapresensi->topic = $request->topic;
+        $datapresensi->grade = $request->grade;
+
+        $post = $datapresensi->save();
         return response()->json([
-            'data' => $presensi
-        ]);
+            'status' => true,
+            'massage' => 'Sukses memasukkan data'
+        ], 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Presensi $presensi)
+    public function show(string $id)
     {
-        return response()->json([
-            'data' => $presensi
-        ]);
+        $presensi = Presensi::find($id);
+        if($presensi){
+            return response()->json([
+                'status' => true,
+                'massage' => 'Data ditemukan',
+                'data' => $presensi
+            ], 200);
+        } else{
+            return response()->json([
+                'status' => false,
+                'massage' => 'Data tidak ditemukan'
+            ]);
+        }
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Presensi $presensi)
+    public function update(Request $request, string $id)
     {
-        $presensi->name = $request->name;
-        $presensi->subject = $request->subject;
-        $presensi->date = $request->date;
-        $presensi->topic = $request->topic;
-        $presensi->grade = $request->grade;
-        $presensi->save();
+        $datapresensi = Presensi::find($id);
+        if(empty($datapresensi)){
+            return response()->json([
+                'status'=>false,
+                'massage'=>'Data tidak ditemukan'
+            ],404);
+        }
+
+        $rules = [
+            'name'=>'required',
+            'subject'=>'required',
+            'date'=>'required|date',
+            'topic'=>'required',
+            'grade'=>'required'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json([
+                'status'=>false,
+                'massage'=>'Gagal melalukan update data',
+                'data'=> $validator->errors()
+            ]);
+        }
+
+        $datapresensi->name = $request->name;
+        $datapresensi->subject = $request->subject;
+        $datapresensi->date = $request->date;
+        $datapresensi->topic = $request->topic;
+        $datapresensi->grade = $request->grade;
+
+        $post = $datapresensi->save();
         return response()->json([
-            'data' =>$presensi
-        ]);
+            'status' => true,
+            'massage' => 'Sukses melakukan update data'
+        ], 200);
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Presensi $presensi)
+    public function destroy(string $id)
     {
-        $presensi ->delete();
+        $datapresensi = Presensi::find($id);
+        if(empty($datapresensi)){
+            return response()->json([
+                'status'=>false,
+                'massage'=>'Data tidak ditemukan'
+            ],404);
+        }
+
+        $post = $datapresensi->delete();
         return response()->json([
-            'massage' => 'customer deleted'
-        ], 204);
+            'status' => true,
+            'massage' => 'Sukses melakukan delete data'
+        ], 200);
     }
 }
